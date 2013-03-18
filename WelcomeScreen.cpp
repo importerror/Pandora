@@ -1,6 +1,8 @@
 #include<glut.h>
 //#include<stdlib.h>
 
+bool* keystates=new bool[256];
+
 void LineLoop(float x,float y)
 {
 	glColor3f(0.6,0.4,0.4);
@@ -30,6 +32,13 @@ void drawstring(float x,float y,char *string)
 		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,string[i]);
 }
 
+void cube()
+{	
+	glColor3f(1,1,1);
+	glTranslatef(0,0,-0.5);
+	glutWireCube(1);
+}
+
 void display()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -37,6 +46,7 @@ void display()
 	square(-7,-5);
 	glColor3f(1,0,0);
 	drawstring(0,0,"Welcome");
+	cube();
 	glFlush();
 }
 
@@ -45,17 +55,24 @@ void idle()
 	glutPostRedisplay();
 }
 
+void key(unsigned char keys,int x,int y)
+{
+	keystates[keys]=true;
+	if(keys=='a')
+		glClearColor(0,0,0,1);
+}
+
 void mouse(int button,int state,int x,int y)
 {
 	// float i;
-	if(button==GLUT_LEFT_BUTTON) //&& state==GLUT_DOWN)
+	if(button==GLUT_LEFT_BUTTON && state==GLUT_DOWN)
 	{
+		glClear(GL_COLOR_BUFFER_BIT);
 		glClearColor(1,1,0,1);
-		glColor3f(0.6,0.4,0.5);
-		square(x,y);
 	}
-	else
+	if(button==GLUT_RIGHT_BUTTON && state==GLUT_DOWN)
 	{	
+		glClearColor(0.6,1,1,1);
 		LineLoop(x,y);
 	}
 }
@@ -69,6 +86,7 @@ void reshape(int w,int h)
 		glOrtho(-10,10,-10*(float)h/(float)w,10*(float)h/(float)w,-10,10);
 	else
 		glOrtho(-10*(float)h/(float)w,10*(float)h/(float)w,-10,10,-10,10);
+	gluPerspective(60, (float)w / (float)h, 1.0, 100.0);
 	glMatrixMode(GL_MODELVIEW);
 }
 
@@ -81,6 +99,7 @@ void main()
 	glutDisplayFunc(display);
 	glutIdleFunc(idle);
 	glutMouseFunc(mouse);
+	glutKeyboardFunc(key);
 	glutReshapeFunc(reshape);
 	glutMainLoop();
 }
