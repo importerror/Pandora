@@ -55,6 +55,13 @@ void key(unsigned char keys,int x,int y)
 	glClearColor(0,0,0,1);
 	glutPostRedisplay();
 }
+
+void display2()
+{
+	glClear(GL_COLOR_BUFFER_BIT);
+	glFlush();
+}
+
 void mouse(int button,int state,int x,int y)
 {
 	// float i;
@@ -81,21 +88,26 @@ void reshape(int w,int h)
 	glOrtho(-10,10,-10*(float)h/(float)w,10*(float)h/(float)w,-10,10);
 	else
 	glOrtho(-10*(float)h/(float)w,10*(float)h/(float)w,-10,10,-10,10);
-	//gluPerspective(60, (float)w / (float)h, 1.0, 100.0);
+	//gluPerspective(100, (float)w / (float)h, 1.0, 100.0);
 	glMatrixMode(GL_MODELVIEW);
 }
 int main(int argc, char ** argv)
 {
-	glutInitWindowSize(1024,1024);
+	glutInitWindowSize(500,500);
 	glutInitDisplayMode(GLUT_RGB|GLUT_SINGLE);
 	glutInitWindowPosition(0,10);
 	glutInit(&argc,argv);
 	glutCreateWindow("Welcome Screen");
 	glutDisplayFunc(display);
-	glutIdleFunc(idle);
 	glutMouseFunc(mouse);
 	glutKeyboardFunc(key);
 	glutReshapeFunc(reshape);
+	glutInitWindowPosition(500,0);
+	glutCreateWindow("2nd Window");
+	glutDisplayFunc(display2);
+	glutMouseFunc(mouse);
+	glutKeyboardFunc(key);
+	glutReshapeFunc(reshape);
+	glutIdleFunc(idle);
 	glutMainLoop();
-}
 }
