@@ -1,6 +1,9 @@
 #include<glut.h>
 //#include<stdlib.h>
+
 bool* keystates=new bool[256];
+float angle=0.0;
+
 void LineLoop(float x,float y)
 {
 	glColor3f(0.6,0.4,0.4);
@@ -43,7 +46,7 @@ void display()
 	glColor3f(1,0,0);
 	drawstring(0,0,"Welcome");
 	cube();
-	glFlush();
+	glutSwapBuffers();
 }
 void idle()
 {
@@ -56,10 +59,23 @@ void key(unsigned char keys,int x,int y)
 	glutPostRedisplay();
 }
 
+void cube_rotate()
+{
+	glRotatef(angle,1,0,0);
+	glRotatef(angle,0,1,0);
+	glRotatef(angle,0,0,1);
+	glColor3f(1,1,0);
+	glutWireCube(2);
+}
+
 void display2()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
-	glFlush();
+	glLoadIdentity();
+	glClearColor(0.4,0.5,0.6,1);
+	cube_rotate();
+	glutSwapBuffers();
+	angle++;
 }
 
 void mouse(int button,int state,int x,int y)
@@ -94,7 +110,7 @@ void reshape(int w,int h)
 int main(int argc, char ** argv)
 {
 	glutInitWindowSize(500,500);
-	glutInitDisplayMode(GLUT_RGB|GLUT_SINGLE);
+	glutInitDisplayMode(GLUT_RGB|GLUT_DOUBLE);
 	glutInitWindowPosition(0,10);
 	glutInit(&argc,argv);
 	glutCreateWindow("Welcome Screen");
