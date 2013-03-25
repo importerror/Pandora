@@ -64,8 +64,10 @@ void cube_rotate()
 	glRotatef(angle,1,0,0);
 	glRotatef(angle,0,1,0);
 	glRotatef(angle,0,0,1);
+	gluLookAt (0.0, 0.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0); //Need to Clarify this function use
 	glColor3f(1,1,0);
 	glutWireCube(2);
+	glutPostRedisplay();
 }
 
 void display2()
