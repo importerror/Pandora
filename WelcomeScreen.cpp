@@ -3,6 +3,7 @@
 
 bool* keystates=new bool[256];
 float angle=0.0;
+float angle1=0.0;
 
 void LineLoop(float x,float y)
 {
@@ -65,8 +66,18 @@ void cube_rotate()
 	glRotatef(angle,0,1,0);
 	glRotatef(angle,0,0,1);
 	gluLookAt (0.0, 0.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0); //Need to Clarify this function use
+	glColor3f(1,0.5,0.1);
+	glutWireTorus(3,0,100,100);
+	glutPostRedisplay();
+}
+
+void Torus_rotate()
+{
+	glRotatef(angle1,1,0,0);
+	glRotatef(angle1,0,1,0);
+	glRotatef(angle1,0,0,1);
 	glColor3f(1,1,0);
-	glutWireCube(3);
+	glutWireTorus(5,0,1,20);
 	glutPostRedisplay();
 }
 
@@ -76,8 +87,10 @@ void display2()
 	glLoadIdentity();
 	glClearColor(0.8,0.7,0.6,1);
 	cube_rotate();
+	Torus_rotate();
 	glutSwapBuffers();
 	angle+=0.05;
+	angle1+=0.05;
 }
 
 void mouse(int button,int state,int x,int y)
