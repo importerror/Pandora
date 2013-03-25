@@ -66,7 +66,7 @@ void cube_rotate()
 	glRotatef(angle,0,0,1);
 	gluLookAt (0.0, 0.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0); //Need to Clarify this function use
 	glColor3f(1,1,0);
-	glutWireCube(2);
+	glutWireCube(3);
 	glutPostRedisplay();
 }
 
@@ -74,10 +74,10 @@ void display2()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glLoadIdentity();
-	glClearColor(0.4,0.5,0.6,1);
+	glClearColor(0.8,0.7,0.6,1);
 	cube_rotate();
 	glutSwapBuffers();
-	angle++;
+	angle+=0.05;
 }
 
 void mouse(int button,int state,int x,int y)
