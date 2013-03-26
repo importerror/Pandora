@@ -34,10 +34,7 @@ void drawstring(float x,float y,char *string)
 void cube()
 {
 	glColor3f(1,1,0.5);
-	glTranslatef(0,0,-3.0);
 	glutWireTeapot(3);
-	glTranslatef(0,-10,0);
-
 }
 void display()
 {
@@ -45,7 +42,7 @@ void display()
 	glColor3f(0,1,0);
 	square(-7,-5);
 	glColor3f(1,0,0);
-	drawstring(0,0,"Welcome");
+	drawstring(-3,3,"Welcome");
 	cube();
 	glutSwapBuffers();
 }
@@ -60,19 +57,20 @@ void key(unsigned char keys,int x,int y)
 	glutPostRedisplay();
 }
 
-void cube_rotate()
+void Sphere_rotate()
 {
 	glRotatef(angle,1,0,0);
 	glRotatef(angle,0,1,0);
 	glRotatef(angle,0,0,1);
-	gluLookAt (0.0, 0.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0); //Need to Clarify this function use
-	glColor3f(1,0.5,0.1);
-	glutWireTorus(3,0,100,100);
+	//gluLookAt (0.0, 0.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0); //Need to Clarify this function use
+	glColor4f(0.7,0.2,0.5,0.4);
+	glutSolidTorus(3,0,100,100);
 	glutPostRedisplay();
 }
 
 void Torus_rotate()
 {
+	glScalef(1,0.5,2);// Created an Ellipse
 	glRotatef(angle1,1,0,0);
 	glRotatef(angle1,0,1,0);
 	glRotatef(angle1,0,0,1);
@@ -86,7 +84,9 @@ void display2()
 	glClear(GL_COLOR_BUFFER_BIT);
 	glLoadIdentity();
 	glClearColor(0.8,0.7,0.6,1);
-	cube_rotate();
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+	Sphere_rotate();
 	Torus_rotate();
 	glutSwapBuffers();
 	angle+=0.05;
@@ -106,7 +106,6 @@ void mouse(int button,int state,int x,int y)
 	glClearColor(0.6,1,1,1);
 	LineLoop(x,y);
 	}
-	glTranslatef(0,0,5.0);
 	glutPostRedisplay();
 
 }
@@ -125,7 +124,7 @@ void reshape(int w,int h)
 int main(int argc, char ** argv)
 {
 	glutInitWindowSize(500,500);
-	glutInitDisplayMode(GLUT_RGB|GLUT_DOUBLE);
+	glutInitDisplayMode(GLUT_RGBA|GLUT_DOUBLE);
 	glutInitWindowPosition(0,10);
 	glutInit(&argc,argv);
 	glutCreateWindow("Welcome Screen");
