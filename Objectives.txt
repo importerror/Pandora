@@ -1,0 +1,4 @@
+1.Need to create
+	a.Tree
+	b.Animals
+	c.Land or Grass
